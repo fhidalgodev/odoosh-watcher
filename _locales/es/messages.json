@@ -1,0 +1,98 @@
+{
+  "extName": {
+    "message": "Odoo.sh Watcher"
+  },
+  "extDesc": {
+    "message": "Monitorea instancias Staging y Production de Odoo.sh y recibe notificaciones antes de que expiren. Hecho por Franyer Hidalgo (github.com/fhidalgodev)."
+  },
+  "loading": {
+    "message": "Cargando..."
+  },
+  "tabExpiring": {
+    "message": "Por expirar"
+  },
+  "tabExpired": {
+    "message": "Expiradas"
+  },
+  "noData": {
+    "message": "Sin datos. Haz clic en \"Force Check\" para cargar."
+  },
+  "noExpired": {
+    "message": "Sin instancias expiradas."
+  },
+  "noExpiring": {
+    "message": "Sin instancias por expirar."
+  },
+  "noInstances": {
+    "message": "Sin instancias. Haz clic en \"Force Check\" para escanear."
+  },
+  "settings": {
+    "message": "Configuración"
+  },
+  "alertMe": {
+    "message": "Alertarme"
+  },
+  "daysBefore": {
+    "message": "días antes de expirar"
+  },
+  "saveSettings": {
+    "message": "Guardar"
+  },
+  "forceCheck": {
+    "message": "Forzar verificación"
+  },
+  "lastCheck": {
+    "message": "Última verificación"
+  },
+  "noCheck": {
+    "message": "Sin verificaciones aún."
+  },
+  "expired": {
+    "message": "Expirado"
+  },
+  "projectTrial": {
+    "message": "Trial de proyecto"
+  },
+  "staging": {
+    "message": "Staging"
+  },
+  "project": {
+    "message": "Proyecto"
+  },
+  "noExpiry": {
+    "message": "Sin expirar"
+  },
+  "unknown": {
+    "message": "Desconocido"
+  },
+  "today": {
+    "message": "Hoy"
+  },
+  "language": {
+    "message": "Idioma"
+  },
+  "daysLeft": {
+    "message": "d restantes"
+  },
+  "checking": {
+    "message": "Verificando..."
+  },
+  "settingsSaved": {
+    "message": "Configuración guardada."
+  },
+  "enterValid": {
+    "message": "Ingresa un valor entre 1 y 30."
+  },
+  "checkedInstances": {
+    "message": "Verificadas $1 instancia(s). $2 alerta(s)."
+  },
+  "checkFailed": {
+    "message": "Verificación fallida: $1"
+  },
+  "unableLoad": {
+    "message": "No se pudieron cargar los datos."
+  },
+  "errorPrefix": {
+    "message": "Error: $1"
+  }
+}

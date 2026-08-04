@@ -1,0 +1,98 @@
+{
+  "extName": {
+    "message": "Odoo.sh Watcher"
+  },
+  "extDesc": {
+    "message": "Monitor Odoo.sh Staging and Production instances and get notified before they expire. Made by Franyer Hidalgo (github.com/fhidalgodev)."
+  },
+  "loading": {
+    "message": "Loading..."
+  },
+  "tabExpiring": {
+    "message": "Expiring"
+  },
+  "tabExpired": {
+    "message": "Expired"
+  },
+  "noData": {
+    "message": "No data yet. Click \"Force Check\" to load."
+  },
+  "noExpired": {
+    "message": "No expired instances."
+  },
+  "noExpiring": {
+    "message": "No instances expiring soon."
+  },
+  "noInstances": {
+    "message": "No instances found. Click \"Force Check\" to scan."
+  },
+  "settings": {
+    "message": "Settings"
+  },
+  "alertMe": {
+    "message": "Alert me"
+  },
+  "daysBefore": {
+    "message": "days before expiration"
+  },
+  "saveSettings": {
+    "message": "Save Settings"
+  },
+  "forceCheck": {
+    "message": "Force Check Now"
+  },
+  "lastCheck": {
+    "message": "Last check"
+  },
+  "noCheck": {
+    "message": "No check performed yet."
+  },
+  "expired": {
+    "message": "Expired"
+  },
+  "projectTrial": {
+    "message": "Project Trial"
+  },
+  "staging": {
+    "message": "Staging"
+  },
+  "project": {
+    "message": "Project"
+  },
+  "noExpiry": {
+    "message": "No expiry"
+  },
+  "unknown": {
+    "message": "Unknown"
+  },
+  "today": {
+    "message": "Today"
+  },
+  "language": {
+    "message": "Language"
+  },
+  "daysLeft": {
+    "message": "d left"
+  },
+  "checking": {
+    "message": "Checking..."
+  },
+  "settingsSaved": {
+    "message": "Settings saved."
+  },
+  "enterValid": {
+    "message": "Please enter a value between 1 and 30."
+  },
+  "checkedInstances": {
+    "message": "Checked $1 instance(s). $2 alert(s)."
+  },
+  "checkFailed": {
+    "message": "Check failed: $1"
+  },
+  "unableLoad": {
+    "message": "Unable to load data."
+  },
+  "errorPrefix": {
+    "message": "Error: $1"
+  }
+}

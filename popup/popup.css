@@ -1,0 +1,468 @@
+/* ==========================================================================
+   Odoo.sh Watcher - Popup Styles
+   Theme: Odoo Purple (#714B67)
+   ========================================================================== */
+
+:root {
+  --odoo-purple: #714B67;
+  --odoo-purple-light: #8E6B85;
+  --odoo-purple-dark: #5A3B52;
+  --odoo-bg: #FAFAFA;
+  --odoo-card-bg: #FFFFFF;
+  --odoo-border: #E0E0E0;
+  --odoo-text: #333333;
+  --odoo-text-muted: #888888;
+  --green: #28A745;
+  --yellow: #FFC107;
+  --red: #DC3545;
+  --blue: #007BFF;
+  --radius: 8px;
+  --shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  width: 360px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: var(--odoo-bg);
+  color: var(--odoo-text);
+  font-size: 13px;
+}
+
+.container {
+  padding: 0;
+}
+
+/* Header ----------------------------------------------------------------- */
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 16px;
+  background: linear-gradient(135deg, var(--odoo-purple) 0%, var(--odoo-purple-dark) 100%);
+  color: #FFFFFF;
+}
+
+.header-logo {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+}
+
+.header-text h1 {
+  font-size: 15px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.header-subtitle {
+  font-size: 11px;
+  opacity: 0.85;
+  margin-top: 2px;
+}
+
+/* Sections --------------------------------------------------------------- */
+
+.section {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--odoo-border);
+}
+
+.section:last-of-type {
+  border-bottom: none;
+}
+
+.section-title {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--odoo-text-muted);
+  margin-bottom: 8px;
+}
+
+/* Tab Bar ---------------------------------------------------------------- */
+
+.tab-bar {
+  display: flex;
+  border-bottom: 1px solid var(--odoo-border);
+}
+
+.tab-btn {
+  flex: 1;
+  padding: 10px 8px;
+  border: none;
+  background: transparent;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--odoo-text-muted);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: color 0.15s ease, border-color 0.15s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.tab-btn:hover {
+  color: var(--odoo-text);
+}
+
+.tab-btn.active {
+  color: var(--odoo-purple);
+  border-bottom-color: var(--odoo-purple);
+}
+
+.tab-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: 9px;
+  font-size: 10px;
+  font-weight: 700;
+  background: rgba(136, 136, 136, 0.15);
+  color: var(--odoo-text-muted);
+}
+
+.tab-btn.active .tab-count {
+  background: rgba(113, 75, 103, 0.15);
+  color: var(--odoo-purple);
+}
+
+/* Tab Panels ------------------------------------------------------------- */
+
+.tab-panel {
+  display: none;
+}
+
+.tab-panel.active {
+  display: block;
+}
+
+/* Project Groups --------------------------------------------------------- */
+
+.project-group {
+  margin-bottom: 10px;
+}
+
+.project-group-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 2px;
+  margin-bottom: 4px;
+}
+
+.project-group-name {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--odoo-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.instance-version {
+  font-size: 10px;
+  color: var(--odoo-text-muted);
+  margin-left: auto;
+}
+
+.license-badge {
+  display: inline-block;
+  padding: 1px 6px;
+  border-radius: 10px;
+  font-size: 9px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.badge-valid {
+  background: rgba(40, 167, 69, 0.12);
+  color: var(--green);
+}
+
+.badge-trial {
+  background: rgba(255, 193, 7, 0.15);
+  color: #B8860B;
+}
+
+.badge-expired {
+  background: rgba(220, 53, 69, 0.12);
+  color: var(--red);
+}
+
+.project-group-branches {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-left: 8px;
+  border-left: 2px solid var(--odoo-border);
+}
+
+/* Instance Cards --------------------------------------------------------- */
+
+.instances-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-height: 240px;
+  overflow-y: auto;
+}
+
+.instance-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 10px;
+  background: var(--odoo-card-bg);
+  border: 1px solid var(--odoo-border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  transition: border-color 0.15s ease;
+}
+
+.instance-card:hover {
+  border-color: var(--odoo-purple-light);
+}
+
+.instance-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.instance-name {
+  font-weight: 600;
+  font-size: 13px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.instance-project {
+  font-size: 11px;
+  color: var(--odoo-text-muted);
+}
+
+.instance-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.badge-staging {
+  background: rgba(113, 75, 103, 0.12);
+  color: var(--odoo-purple);
+}
+
+.badge-trial {
+  background: rgba(255, 193, 7, 0.15);
+  color: #B8860B;
+}
+
+.badge-production {
+  background: rgba(0, 123, 255, 0.12);
+  color: var(--blue);
+}
+
+.instance-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.days-indicator {
+  font-size: 12px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.days-safe {
+  color: var(--green);
+  background: rgba(40, 167, 69, 0.1);
+}
+
+.days-warning {
+  color: #B8860B;
+  background: rgba(255, 193, 7, 0.15);
+}
+
+.days-danger {
+  color: var(--red);
+  background: rgba(220, 53, 69, 0.1);
+}
+
+.days-expired {
+  color: var(--red);
+  background: rgba(220, 53, 69, 0.2);
+}
+
+.days-unknown {
+  color: var(--odoo-text-muted);
+  background: rgba(136, 136, 136, 0.1);
+}
+
+/* Empty State ------------------------------------------------------------ */
+
+.empty-state {
+  text-align: center;
+  padding: 20px 10px;
+  color: var(--odoo-text-muted);
+  font-size: 12px;
+}
+
+/* Settings --------------------------------------------------------------- */
+
+.settings-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.settings-label {
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.settings-detail {
+  display: block;
+  font-size: 11px;
+  color: var(--odoo-text-muted);
+  font-weight: 400;
+}
+
+.settings-input {
+  width: 60px;
+  padding: 4px 8px;
+  border: 1px solid var(--odoo-border);
+  border-radius: 4px;
+  font-size: 14px;
+  text-align: center;
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+
+.settings-input:focus {
+  border-color: var(--odoo-purple);
+}
+
+.settings-select {
+  padding: 4px 8px;
+  border: 1px solid var(--odoo-border);
+  border-radius: 4px;
+  font-size: 13px;
+  outline: none;
+  transition: border-color 0.15s ease;
+  background: var(--odoo-card-bg);
+  cursor: pointer;
+}
+
+.settings-select:focus {
+  border-color: var(--odoo-purple);
+}
+
+/* Buttons ---------------------------------------------------------------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border: none;
+  border-radius: var(--radius);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.15s ease, background 0.15s ease;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background: var(--odoo-purple);
+  color: #FFFFFF;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: var(--odoo-purple-dark);
+}
+
+.btn-secondary {
+  background: #F0F0F0;
+  color: var(--odoo-text);
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background: #E5E5E5;
+}
+
+.btn-block {
+  width: 100%;
+}
+
+/* Spinner ---------------------------------------------------------------- */
+
+.spinner {
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: #FFFFFF;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Footer ----------------------------------------------------------------- */
+
+.footer {
+  padding: 8px 16px;
+  text-align: center;
+}
+
+.status-msg {
+  font-size: 11px;
+  color: var(--odoo-text-muted);
+}
+
+.status-msg.success {
+  color: var(--green);
+}
+
+.status-msg.error {
+  color: var(--red);
+}
+
+/* Utilities -------------------------------------------------------------- */
+
+.hidden {
+  display: none !important;
+}

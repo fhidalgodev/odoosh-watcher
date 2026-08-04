@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Odoo.sh Watcher</title>
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <header class="header">
+      <img src="../icons/icon-48.png" alt="Logo" class="header-logo" />
+      <div class="header-text">
+        <h1 data-i18n="extName">Odoo.sh Watcher</h1>
+        <p class="header-subtitle" id="last-check" data-i18n="loading">Loading...</p>
+      </div>
+    </header>
+
+    <!-- Tab Bar -->
+    <div class="tab-bar">
+      <button class="tab-btn active" id="tab-expiring" data-tab="expiring">
+        <span data-i18n="tabExpiring">Expiring</span> <span class="tab-count" id="count-expiring">0</span>
+      </button>
+      <button class="tab-btn" id="tab-expired" data-tab="expired">
+        <span data-i18n="tabExpired">Expired</span> <span class="tab-count" id="count-expired">0</span>
+      </button>
+    </div>
+
+    <!-- Tab: Expiring -->
+    <section class="section tab-panel active" id="panel-expiring">
+      <div id="instances-list" class="instances-list">
+        <div class="empty-state" data-i18n="noData">No data yet. Click "Force Check" to load.</div>
+      </div>
+    </section>
+
+    <!-- Tab: Expired -->
+    <section class="section tab-panel" id="panel-expired">
+      <div id="instances-list-expired" class="instances-list">
+        <div class="empty-state" data-i18n="noExpired">No expired instances.</div>
+      </div>
+    </section>
+
+    <!-- Settings -->
+    <section class="section">
+      <h2 class="section-title" data-i18n="settings">Settings</h2>
+      <div class="settings-row">
+        <label for="lang-select" class="settings-label">
+          <span data-i18n="language">Language</span>
+        </label>
+        <select id="lang-select" class="settings-select">
+          <option value="en">English</option>
+          <option value="es">Español</option>
+        </select>
+      </div>
+      <div class="settings-row">
+        <label for="threshold-input" class="settings-label">
+          <span data-i18n="alertMe">Alert me</span>
+          <span class="settings-detail" data-i18n="daysBefore">days before expiration</span>
+        </label>
+        <input
+          type="number"
+          id="threshold-input"
+          min="1"
+          max="30"
+          value="3"
+          class="settings-input"
+        />
+      </div>
+      <button id="save-btn" class="btn btn-secondary btn-block">
+        <span data-i18n="saveSettings">Save Settings</span>
+      </button>
+    </section>
+
+    <!-- Actions -->
+    <section class="section">
+      <button id="force-check-btn" class="btn btn-primary btn-block">
+        <span id="force-check-text" data-i18n="forceCheck">Force Check Now</span>
+        <span id="force-check-spinner" class="spinner hidden"></span>
+      </button>
+    </section>
+
+    <!-- Status -->
+    <footer class="footer">
+      <span id="status-msg" class="status-msg"></span>
+    </footer>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
