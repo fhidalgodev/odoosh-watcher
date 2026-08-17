@@ -3,7 +3,7 @@
     "message": "Odoo.sh Watcher"
   },
   "extDesc": {
-    "message": "Monitorea instancias Staging y Production de Odoo.sh y recibe notificaciones antes de que expiren. Hecho por Franyer Hidalgo (github.com/fhidalgodev)."
+    "message": "Monitorea instancias Staging y Production de Odoo.sh y recibe notificaciones antes de que expiren."
   },
   "loading": {
     "message": "Cargando..."
