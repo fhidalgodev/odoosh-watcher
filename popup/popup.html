@@ -67,6 +67,20 @@
           class="settings-input"
         />
       </div>
+      <div class="settings-row">
+        <label for="interval-select" class="settings-label">
+          <span data-i18n="checkInterval">Check every</span>
+        </label>
+        <select id="interval-select" class="settings-select">
+          <option value="30" data-i18n="interval30m">30 minutes</option>
+          <option value="60" data-i18n="interval1h">1 hour</option>
+          <option value="120" data-i18n="interval2h">2 hours</option>
+          <option value="240" data-i18n="interval4h" selected>4 hours</option>
+          <option value="360" data-i18n="interval6h">6 hours</option>
+          <option value="720" data-i18n="interval12h">12 hours</option>
+          <option value="1440" data-i18n="interval24h">24 hours</option>
+        </select>
+      </div>
       <button id="save-btn" class="btn btn-secondary btn-block">
         <span data-i18n="saveSettings">Save Settings</span>
       </button>

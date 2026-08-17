@@ -13,27 +13,33 @@ import { fetchAllInstances } from "./lib/odoosh-api.js";
 // ---------------------------------------------------------------------------
 
 const ALARM_NAME = "odoosh-check";
-const ALARM_PERIOD_MINUTES = 240; // 4 hours
+const DEFAULT_CHECK_INTERVAL_MINUTES = 240; // 4 hours
+const MIN_CHECK_INTERVAL_MINUTES = 30;
+const MAX_CHECK_INTERVAL_MINUTES = 1440; // 24 hours
 const DEFAULT_THRESHOLD_DAYS = 3;
 const STORAGE_KEY_INSTANCES = "cached_instances";
 const STORAGE_KEY_LAST_CHECK = "last_check";
 const STORAGE_KEY_THRESHOLD = "threshold_days";
+const STORAGE_KEY_CHECK_INTERVAL = "check_interval_minutes";
 
 // ---------------------------------------------------------------------------
 // Alarm Setup
 // ---------------------------------------------------------------------------
 
 /**
- * Create or refresh the periodic alarm.
- * Called on extension install/update and on service worker startup.
+ * Create or refresh the periodic alarm using the configured interval.
+ * Always clears and recreates the alarm so that interval changes take
+ * effect immediately. Called on extension install/update, on service
+ * worker startup, and when the user updates the interval from the popup.
+ *
+ * @returns {Promise<void>}
  */
-function setupAlarm() {
-  chrome.alarms.get(ALARM_NAME, (existing) => {
-    if (!existing) {
-      chrome.alarms.create(ALARM_NAME, {
-        periodInMinutes: ALARM_PERIOD_MINUTES,
-      });
-    }
+async function setupAlarm() {
+  const interval = await getCheckInterval();
+  chrome.alarms.clear(ALARM_NAME, () => {
+    chrome.alarms.create(ALARM_NAME, {
+      periodInMinutes: interval,
+    });
   });
 }
 
@@ -51,6 +57,26 @@ async function getThreshold() {
   return new Promise((resolve) => {
     chrome.storage.sync.get([STORAGE_KEY_THRESHOLD], (result) => {
       resolve(result[STORAGE_KEY_THRESHOLD] ?? DEFAULT_THRESHOLD_DAYS);
+    });
+  });
+}
+
+/**
+ * Get the configured check interval (minutes between periodic checks).
+ * Reads from chrome.storage.sync, falls back to default.
+ * Clamped to [MIN, MAX] to guard against corrupted values.
+ *
+ * @returns {Promise<number>} Interval in minutes
+ */
+async function getCheckInterval() {
+  return new Promise((resolve) => {
+    chrome.storage.sync.get([STORAGE_KEY_CHECK_INTERVAL], (result) => {
+      const raw = result[STORAGE_KEY_CHECK_INTERVAL] ?? DEFAULT_CHECK_INTERVAL_MINUTES;
+      const clamped = Math.min(
+        Math.max(raw, MIN_CHECK_INTERVAL_MINUTES),
+        MAX_CHECK_INTERVAL_MINUTES
+      );
+      resolve(clamped);
     });
   });
 }
@@ -168,7 +194,7 @@ function formatDaysRemaining(days) {
 
 // Extension installed/updated
 chrome.runtime.onInstalled.addListener(() => {
-  setupAlarm();
+  setupAlarm().catch((e) => console.error("[Odoo.sh Watcher] setupAlarm failed:", e));
   // Run an initial check shortly after install
   setTimeout(checkOdooshInstances, 5000);
 });
@@ -201,6 +227,14 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
     );
     return true;
   }
+
+  if (message.action === "update-interval") {
+    setupAlarm().then(
+      () => sendResponse({ success: true }),
+      (err) => sendResponse({ success: false, error: err.message })
+    );
+    return true;
+  }
 });
 
 // Notification clicked - open the branch URL
@@ -228,4 +262,4 @@ chrome.notifications.onClicked.addListener((notificationId) => {
 });
 
 // Ensure alarm exists when service worker wakes up
-setupAlarm();
+setupAlarm().catch((e) => console.error("[Odoo.sh Watcher] setupAlarm failed:", e));

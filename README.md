@@ -4,7 +4,7 @@ Browser extension (Chrome/Edge/Brave) that monitors Odoo.sh projects and staging
 
 ## Features
 
-- **Automatic monitoring** every 4 hours via `chrome.alarms`
+- **Automatic monitoring** at a configurable interval (default: every 4 hours) via `chrome.alarms`
 - **Native notifications** when instances expire within the configured threshold (default: 3 days)
 - **Popup UI** with Odoo Purple theme showing:
   - **Tabbed interface** with "Expiring" and "Expired" tabs, each with live count badges
@@ -13,6 +13,7 @@ Browser extension (Chrome/Edge/Brave) that monitors Odoo.sh projects and staging
   - Trial projects with days remaining countdown
   - Color-coded indicators (green > 7d, yellow 3-7d, red < 3d)
   - Configurable alert threshold (1-30 days)
+  - Configurable check interval (30 min, 1h, 2h, 4h, 6h, 12h, 24h)
   - **Language selector** (English/Espanol) with live switching — no restart needed
   - "Force Check Now" button for manual refresh
 - **Session-based auth** - inherits cookies from your logged-in Odoo.sh session (no API keys needed)
@@ -32,9 +33,9 @@ Browser extension (Chrome/Edge/Brave) that monitors Odoo.sh projects and staging
 
 ## Usage
 
-1. **Automatic**: The extension checks every 4 hours in the background. If any staging or production instance is within the threshold, you will receive a desktop notification.
+1. **Automatic**: The extension checks at the configured interval (default: every 4 hours) in the background. If any staging or production instance is within the threshold, you will receive a desktop notification.
 2. **Manual**: Click the extension icon and press "Force Check Now" to run an immediate check.
-3. **Configure**: Adjust the "Alert me X days before expiration" setting in the popup and click "Save Settings".
+3. **Configure**: Adjust the "Alert me X days before expiration" setting and the "Check every" interval in the popup, then click "Save Settings". The alarm is recreated immediately when the interval changes.
 4. **Language**: Select English or Espanol from the language dropdown in Settings. The UI updates instantly.
 
 ## Architecture
@@ -64,11 +65,12 @@ odoosh-watcher/
 ### How It Works
 
 1. **Background Service Worker** (`background.js`):
-   - Creates a `chrome.alarms` timer that fires every 4 hours
+   - Creates a `chrome.alarms` timer that fires at the configured interval (default: every 4 hours)
    - On each tick, calls `fetchAllInstances()` from the API module
    - Compares each instance's `daysRemaining` against the configured threshold
    - If `daysRemaining <= threshold`, sends a `chrome.notifications.create()` notification
    - Caches results in `chrome.storage.local` for the popup to read
+   - When the user changes the interval, the alarm is cleared and recreated with the new period
 
 2. **API Module** (`lib/odoosh-api.js`):
    - **Level 1**: Scrapes `/project` to extract the project list (name, license, version, location, trial days left)
@@ -85,8 +87,8 @@ odoosh-watcher/
    - Groups instances by project with license badges and version display
    - **i18n system** loads translations from `_locales/{locale}/messages.json` via `fetch()` at runtime
    - Language preference saved to `chrome.storage.sync` — defaults to browser locale
-   - Sends messages to the background service worker for force-checks
-   - Saves threshold configuration to `chrome.storage.sync`
+   - Sends messages to the background service worker for force-checks and interval updates
+   - Saves threshold and check interval configuration to `chrome.storage.sync`
 
 ## Important Notes
 
@@ -109,9 +111,9 @@ The extension relies on the browser's existing session cookies for Odoo.sh. No A
 
 | Permission | Purpose |
 |---|---|
-| `alarms` | Schedule periodic checks every 4 hours |
+| `alarms` | Schedule periodic checks at the configured interval (default: 4 hours) |
 | `notifications` | Send desktop notifications for expiring instances |
-| `storage` | Cache instance data and save user settings (threshold, locale) |
+| `storage` | Cache instance data and save user settings (threshold, check interval, locale) |
 | `tabs` | Create and navigate reusable background tab for scraping |
 | `scripting` | Execute parsing functions in background tab via `executeScript` |
 | `offscreen` | Offscreen documents for notification handling |

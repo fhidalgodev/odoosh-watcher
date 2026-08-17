@@ -13,6 +13,7 @@ const instancesList = document.getElementById("instances-list");
 const instancesListExpired = document.getElementById("instances-list-expired");
 const lastCheckEl = document.getElementById("last-check");
 const thresholdInput = document.getElementById("threshold-input");
+const intervalSelect = document.getElementById("interval-select");
 const saveBtn = document.getElementById("save-btn");
 const forceCheckBtn = document.getElementById("force-check-btn");
 const forceCheckText = document.getElementById("force-check-text");
@@ -28,6 +29,7 @@ const langSelect = document.getElementById("lang-select");
 
 let currentLocale = null;
 let translations = {};
+let loadedCheckInterval = 240; // default, overwritten on load
 
 // ---------------------------------------------------------------------------
 // i18n
@@ -91,6 +93,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   await initLocale();
   applyI18n();
   loadThreshold();
+  loadCheckInterval();
   loadCachedData();
 
   tabExpiring.addEventListener("click", () => switchTab("expiring"));
@@ -136,19 +139,46 @@ function loadThreshold() {
 }
 
 /**
+ * Load the saved check interval from chrome.storage.sync and select it
+ * in the dropdown. Stores the loaded value for later change detection.
+ */
+function loadCheckInterval() {
+  chrome.storage.sync.get(["check_interval_minutes"], (result) => {
+    const value = result.check_interval_minutes ?? 240;
+    loadedCheckInterval = value;
+    intervalSelect.value = String(value);
+  });
+}
+
+/**
  * Save the threshold value to chrome.storage.sync.
  */
 saveBtn.addEventListener("click", () => {
-  const value = parseInt(thresholdInput.value, 10);
-  if (isNaN(value) || value < 1 || value > 30) {
+  const thresholdValue = parseInt(thresholdInput.value, 10);
+  if (isNaN(thresholdValue) || thresholdValue < 1 || thresholdValue > 30) {
     showStatus(t("enterValid"), "error");
     return;
   }
 
-  chrome.storage.sync.set({ threshold_days: value }, () => {
-    showStatus(t("settingsSaved"), "success");
-    setTimeout(() => clearStatus(), 2000);
-  });
+  const intervalValue = parseInt(intervalSelect.value, 10);
+
+  chrome.storage.sync.set(
+    { threshold_days: thresholdValue, check_interval_minutes: intervalValue },
+    () => {
+      // If the interval changed, tell the background to recreate the alarm
+      if (intervalValue !== loadedCheckInterval) {
+        loadedCheckInterval = intervalValue;
+        chrome.runtime.sendMessage({ action: "update-interval" }, (resp) => {
+          const ok = resp && resp.success;
+          showStatus(ok ? t("settingsSaved") : t("checkFailed", "interval"), ok ? "success" : "error");
+          setTimeout(() => clearStatus(), 2000);
+        });
+      } else {
+        showStatus(t("settingsSaved"), "success");
+        setTimeout(() => clearStatus(), 2000);
+      }
+    }
+  );
 });
 
 // ---------------------------------------------------------------------------

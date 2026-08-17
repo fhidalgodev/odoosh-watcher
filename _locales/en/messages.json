@@ -71,6 +71,30 @@
   "language": {
     "message": "Language"
   },
+  "checkInterval": {
+    "message": "Check every"
+  },
+  "interval30m": {
+    "message": "30 minutes"
+  },
+  "interval1h": {
+    "message": "1 hour"
+  },
+  "interval2h": {
+    "message": "2 hours"
+  },
+  "interval4h": {
+    "message": "4 hours"
+  },
+  "interval6h": {
+    "message": "6 hours"
+  },
+  "interval12h": {
+    "message": "12 hours"
+  },
+  "interval24h": {
+    "message": "24 hours"
+  },
   "daysLeft": {
     "message": "d left"
   },
